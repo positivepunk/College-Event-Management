@@ -1,0 +1,887 @@
+11.Source Code:
+Index.php
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<?php require 'utils/styles.php';?>
+</head>
+<body>
+<?php require 'utils/header.php'; ?><!--header content. file found in utils folder-->
+<div class = "content"><!--body content holder-->
+<div class = "container">
+<div class = "col-md-12"><!--body content title holder with 12 grid columns-->
+<h1 style="color:#000080 ; font-size:42px ; font-style:bold "><strong> Register to your Favourite 
+events:</strong></h1><!--body content title-->
+28
+</div>
+<div class="container">
+<div class="col-md-12">
+<hr>
+</div>
+</div>
+<div class="row"><!--technical content-->
+<section>
+<div class="container">
+<div class="col-md-6"><!--image holder with 6 grid columns-->
+<img src="images/technical.jpg" class="img-responsive">
+</div>
+<div class="subcontent col-md-6"><!--Text holder with 6 column grid-->
+<h1 style="color:#003300 ; font-size:38px ;" ><u><strong>Technical Events</strong></u></h1><!--title-->
+<p><!--content-->
+EMBRACE YOUR TECHNICAL SKILLS BY PARTICIPATING IN OUR DIFFERENT TECHNICAL 
+EVENTS!
+</p>
+<br><br>
+<?php $id=1;
+echo
+'<a class="btn btn-default" href="viewEvent.php?id='.$id.'"> <span class="glyphicon glyphicon-circle-arrowright"></span>View Technical Events</a>'
+?>
+</div><!--subcontent div-->
+</div><!--container div-->
+</section>
+</div><!--row div-->
+<div class="container">
+<div class="col-md-12">
+<hr>
+</div>
+</div>
+<div class="row">
+<section>
+<div class="container">
+<div class="col-md-6"><!--image holder with 6 grid columns-->
+<img src="images/gaming.jpg" class="img-responsive">
+</div>
+<div class="subcontent col-md-6"><!--Text holder with 6 column grid-->
+<h1 style="color:#003300 ; font-size:38px ;"><strong><u>Gaming Events</u></strong></h1><!--title-->
+<p><!--content-->
+29
+EMBRACE YOUR GAMING SKILLS BY PARTICIPATING IN OUR DIFFERENT GAMING EVENTS!
+</p>
+<br><br>
+<?php
+$id=2;
+echo
+'<a class="btn btn-default" href="viewEvent.php?id='.$id .'"> <span class="glyphicon glyphicon-circle-arrowright"></span>View Gaming Events</a>'
+?>
+</div><!--subcontent div-->
+</div><!--container div-->
+</section>
+</div><!--row div-->
+<div class="container">
+<div class="col-md-12">
+<hr>
+</div>
+</div>
+<div class="row">
+<section>
+<div class="container">
+<div class="col-md-6"><!--image holder with 6 grid columns-->
+<img src="images/onstage.jpg" class="img-responsive">
+</div>
+<div class="subcontent col-md-6"><!--Text holder with 6 column grid-->
+<h1 style="color:#003300 ; font-size:38px ;"><strong><u>On-Stage Events</strong></u></h1><!--title-->
+<p><!--content-->
+EMBRACE YOUR CONFIDENCE BY PARTICIPATING IN OUR DIFFERENT ON-STAGE EVENTS!
+</p>
+<br><br>
+<?php
+$id=3;
+echo
+'<a class="btn btn-default" href="viewEvent.php?id='.$id .'"> <span class="glyphicon glyphicon-circle-arrowright"></span>View On-Stage Events</a>'
+?>
+</div><!--subcontent div-->
+</div><!--container div-->
+</section>
+</div><!--row div-->
+<div class="container">
+<div class="col-md-12">
+<hr>
+30
+</div>
+</div>
+<div class="row">
+<section>
+<div class="container">
+<div class="col-md-6"><!--image holder with 6 grid columns-->
+<img src="images/offstage.jpg" class="img-responsive">
+</div>
+<div class="subcontent col-md-6"><!--Text holder with 6 column grid-->
+<h1 style="color:#003300 ; font-size:38px ;"><strong><u>Off-Stage Events</u></strong></h1><!--title-->
+<p><!--content-->
+EMBRACE YOUR TALENT BY PARTICIPATING IN OUR DIFFERENT OFF-STAGE EVENTS!
+</p>
+<br><br><br>
+<?php
+$id=4;
+echo
+'<a class="btn btn-default" href="viewEvent.php?id='.$id .'"> <span class="glyphicon glyphicon-circle-arrowright"></span>View Off-Stage Events</a>'
+?>
+</div><!--subcontent div-->
+</div><!--container div-->
+</section>
+</div><!--row div-->
+</div><!--body content div-->
+<?php require 'utils/footer.php'; ?><!--footer content. file found in utils folder-->
+</body>
+</html>
+events.php
+<div class="container">
+<div class="col-md-12">
+<hr>
+</div>
+<div class="row">
+<section>
+<div class="container">
+<div class="col-md-6">
+<img src=" <?php echo $row['img_link'];?>" class="img-responsive">
+</div>
+<div class="subcontent col-md-6">
+31
+<h1 style="color:#003300 ; font-size:38px ;" ><u><strong><?php echo '<td>' . $row['event_title'] . 
+'</td>';?></strong></u></h1><!--title-->
+<p style="color:#003300 ;font-size:20px "><!--content-->
+<?php
+echo 'Date:' . $row['Date'] .'<br>';
+echo 'Time:' . $row['time'] .'<br>';
+echo 'Location:' . $row['location'] .'<br>';
+echo 'Student Co-ordinator:' . $row['st_name'] .'<br>';
+echo 'Staff Co-ordinator:' . $row['name'] .'<br>';
+echo 'Event Price:' . $row['event_price'].'<br>' ;
+echo 'Event_id:' . $row['event_id'].'<br>' ;
+?>
+</p>
+<br><br>
+</div><!--subcontent div-->
+</div><!--container div-->
+</section>
+</div>
+</div><!--row div-->
+32
+ViewEvent.php
+<?php
+//session_start();
+require 'classes/db1.php';
+$id=$_GET['id'];
+$result = mysqli_query($conn,"SELECT * FROM events,event_info ef,student_coordinator s,staff_coordinator 
+st WHERE type_id = $id and ef.event_id=events.event_id and s.event_id=events.event_id and 
+st.event_id=events.event_id ");
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder-->
+</head>
+<body>
+<?php require 'utils/header.php'; ?><!--header content. file found in utils folder-->
+<div class = "content"><!--body content holder-->
+<div class = "container">
+<div class = "col-md-12"><!--body content title holder with 12 grid columns-->
+</div>
+<?php
+if (mysqli_num_rows($result) > 0) {
+while($row = mysqli_fetch_array($result)) {
+include 'events.php';
+}
+?>
+<html>
+<body>
+33
+<div style = "position:relative; left:550px;">
+<form action="register.php" method="get">
+<label style="font-size:24px;">Enter eventid to register</label>
+<input type="number" name="varname" style="border:5px solid;background-color:#eafafb;" required >
+<button type="submit" class="btn btn-primary">Next</button>
+</form>
+</div>
+<br>
+</body>
+</html>
+<div class="container">
+<div class="col-md-12">
+<hr>
+</div>
+</div>
+<?php }?>
+<a class="btn btn-default" href="index.php"><span class="glyphicon glyphicon-circle-arrow-left"></span> 
+Back</a>
+</div><!--body content div-->
+<?php require 'utils/footer.php'; ?><!--footer content. file found in utils folder-->
+</body>
+</html>
+34
+Usn.php
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder-->
+</head>
+<body>
+<?php require 'utils/header.php'; ?><!--header content. file found in utils folder-->
+<div class ="content"><!--body content holder-->
+<div class = "container">
+<div class ="col-md-6 col-md-offset-3">
+<form action="RegisteredEvents.php" class ="form-group" method="POST">
+<div class="form-group">
+<label for="usn"> Student USN: </label>
+<input type="text"
+id="usn"
+name="usn"
+class="form-control">
+</div>
+<button type="submit" class = "btn btn-default">Login</button>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>
+35
+Register.php
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<?php
+$EID=$_GET["varname"];
+//session_start();
+require 'utils/styles.php'; ?><!--css links. file found in utils folder-->
+</head>
+<body>
+<?php require 'utils/header.php'; ?>
+<div class ="content"><!--body content holder-->
+<div class = "container">
+<div class ="col-md-6 col-md-offset-3">
+<form method="POST">
+<label>Student USN:</label><br>
+<input type="text" name="usn" class="form-control" required><br><br>
+<label>Student Name:</label><br>
+<input type="text" name="name" class="form-control" required><br><br>
+<label>Branch:</label><br>
+<input type="text" name="branch" class="form-control" required><br><br>
+<label>Semester:</label><br>
+<input type="text" name="sem" class="form-control" required><br><br>
+<label>Email:</label><br>
+<input type="text" name="email" class="form-control" required ><br><br>
+<label>Phone:</label><br>
+<input type="text" name="phone" class="form-control" required><br><br>
+<label>College:</label><br>
+<input type="text" name="college" class="form-control" required><br><br>
+<button type="submit" name="update" required>Submit</button><br><br>
+<a href="usn.php" ><u>Already registered ?</u></a>
+</div>
+36
+</div>
+</div>
+</form>
+<?php require 'utils/footer.php'; ?>
+</body>
+</html>
+<?php
+if (isset($_POST["update"]))
+{
+$usn=$_POST["usn"];
+$name=$_POST["name"];
+$branch=$_POST["branch"];
+$sem=$_POST["sem"];
+$email=$_POST["email"];
+$phone=$_POST["phone"];
+$college=$_POST["college"];
+if( !empty($usn) || !empty($name) || !empty($branch) || !empty($sem) || !empty($email) || !empty($phone) || 
+!empty($college) )
+{
+include 'classes/db1.php';
+$INSERT="INSERT INTO participent (usn,name,branch,sem,email,phone,college,event_id) 
+VALUES('$usn','$name','$branch',$sem,'$email','$phone','$college','$EID')";
+$INSERT2="INSERT INTO registered (usn,event_id) VALUES('$usn','$EID')";
+if($conn->query($INSERT)===True && $conn->query($INSERT2)===True){
+echo "<script>
+alert('Registered Successfully!');
+window.location.href='usn.php';
+</script>";
+}
+else
+{
+echo"<script>
+alert(' Already registered this usn');
+window.location.href='usn.php';
+</script>";
+}
+$conn->close();
+}
+else
+{
+37
+echo"<script>
+alert('All fields are required');
+window.location.href='register.php';
+</script>";
+}
+}
+?>
+RegisteredEvents.php
+<?php
+require_once 'utils/header.php';
+require_once 'utils/styles.php';
+$usn=$_POST['usn'];
+include_once 'classes/db1.php';
+$result = mysqli_query($conn, "SELECT * FROM registered r,staff_coordinator s ,event_info ef 
+,student_coordinator st,events e where e.event_id= ef.event_id and e.event_id= s.event_id and e.event_id= 
+st.event_id and r.usn= '$usn' and r.event_id=e.event_id");
+?><div class = "content"><div class = "container"><h1> Registered Events</h1>
+<?php
+if (mysqli_num_rows($result) > 0) {
+?>
+<table class="table table-hover" >
+<thead>
+<tr>
+<th>Event_name</th>
+<th>Student Co-ordinator</th>
+<th>Staff Co-ordinator</th>
+<th>Date</th>
+<th>Time</th>
+<th>location </th></tr></thead><tbody>
+<?php
+$i=0;
+while($row = mysqli_fetch_array($result)) {
+echo '<tr>';
+echo '<td>' . $row['event_title'] . '</td>';
+echo '<td>' . $row['st_name'] . '</td>';
+echo '<td>' . $row['name'] . '</td>';
+echo '<td>'.$row['Date'].'</td>';
+echo '<td>'.$row['time'].'</td>';
+38
+echo '<td>'.$row['location'].'</td>';
+echo '</tr>';
+$i++;
+}
+?></tbody></table>
+<?php }
+else{
+echo 'Not Yet Registered for any events';
+}?>
+</div>
+</div>
+<?php include 'utils/footer.php'; ?> 
+39
+login_form.php
+<?php
+include_once 'classes/db1.php';?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<style>
+span.error{
+color: red;
+}
+</style>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder-->
+</head>
+<body>
+<?php require 'utils/header.php'; ?><!--header content. file found in utils folder-->
+<div class = "content"><!--body content holder-->
+<div class = "container">
+<div class ="col-md-6 col-md-offset-3">
+<form method="POST"><!--form-->
+<!--username field-->
+<label>UserName:</label><br>
+<input type="text" name="name" class="form-control" required><br>
+<label>Password</label><br>
+<input type="password" name="password" class="form-control" required><br>
+<button type = "submit" name="update" class = "btn btn-default">Login</button>
+</form>
+</div><!--col md 6 div-->
+</div><!--container div-->
+</div><!--content div-->
+<?php require 'utils/footer.php'; ?><!--footer content. file found in utils folder-->
+</body>
+</html>
+40
+<?php
+if (isset($_POST["update"]))
+{
+$myusername=$_POST['name'];
+$mypassword=$_POST['password'];
+if($mypassword=='cool' && $myusername=='admin')
+{
+echo "<script>
+alert('Login Successfull');
+window.location.href='adminPage.php';
+</script>";
+}
+else
+{
+echo "<script>
+alert('Invalid credentials');
+window.location.href='login_form.php';
+</script>";
+}
+}
+?>
+41
+adminPage.php
+<?php
+include_once 'classes/db1.php';
+$result = mysqli_query($conn,"SELECT * FROM staff_coordinator s ,event_info ef ,student_coordinator 
+st,events e where e.event_id= ef.event_id and e.event_id= s.event_id and e.event_id= st.event_id");
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+</head>
+<body>
+<?php include 'utils/adminHeader.php'?>
+<div class = "content">
+<div class = "container">
+<h1>Event details</h1>
+<?php
+if (mysqli_num_rows($result) > 0) {
+?>
+<table class="table table-hover" >
+<thead>
+<tr>
+<th>Event_name</th>
+<th>Price</th>
+<th>Student Co-ordinator</th>
+<th>Staff Co-ordinator</th>
+<th>Date</th>
+<th>Time</th>
+<th>location </th>
+</tr>
+</thead>
+<tbody>
+<?php
+$i=0;
+while($row = mysqli_fetch_array($result)){
+echo '<tr>';
+42
+echo '<td>' . $row['event_title'] . '</td>';
+echo '<td>' . $row['event_price'] . '</td>';
+echo '<td>' . $row['st_name'] . '</td>';
+echo '<td>' . $row['name'] . '</td>';
+echo '<td>'.$row['Date'].'</td>';
+echo '<td>'.$row['time'].'</td>';
+echo '<td>'.$row['location'].'</td>';
+echo '<td>'
+.'<a class="delete" href="deleteEvent.php?id='.$row['event_id'].'">Delete</a> '
+.'</td>';
+echo '</tr>';
+$i++;
+}
+?>
+</tbody>
+</table>
+<?php
+}
+?>
+<a class="btn btn-default" href = "createEventForm.php">Create Event</a><!--register button-->
+</div>
+</div>
+<?php require 'utils/footer.php'; ?>
+</body>
+</html>
+Stu_cordinator.php
+<?php
+include_once 'classes/db1.php';
+$result = mysqli_query($conn,"SELECT * FROM student_coordinator s ,events e where e.event_id= 
+s.event_id");
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder-->
+43
+</head>
+<body><?php include 'utils/adminHeader.php'?>
+<div class = "content">
+<div class = "container">
+<h1>Student Co-ordinator details</h1>
+<?php
+if (mysqli_num_rows($result) > 0) {
+?>
+<table class="table table-hover" >
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Event</th>
+<th></th>
+</tr>
+<?php
+$i=0;
+while($row = mysqli_fetch_array($result)) {
+?>
+<tr>
+<td><?php echo $row["st_name"]; ?></td>
+<td><?php echo $row["phone"]; ?></td>
+<td><?php echo $row["event_title"]; ?></td>
+<td> <?php echo '<a href="updateStudent.php?id='.$row['event_id'].'" class = "btn btn-default"> 
+Update</a>'?></td>
+</tr>
+<?php
+$i++;
+}
+?>
+</table>
+<?php
+}
+else{
+echo "No result found";
+}
+?>
+</div>
+</div>
+</body>
+<?php include 'utils/footer.php';?>
+</html>
+44
+Staff_cordinator.php
+<?php
+include_once 'classes/db1.php';
+$result = mysqli_query($conn,"SELECT * FROM staff_coordinator s ,events e where e.event_id= s.event_id");
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder-->
+</head>
+<body><?php include 'utils/adminHeader.php'?>
+<div class = "content">
+<div class = "container">
+<h1>Staff Co-ordinator details</h1>
+<?php
+if (mysqli_num_rows($result) > 0) {
+?>
+<table class="table table-hover" ><tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Event</th>
+<th></th></tr>
+<?php
+$i=0;
+while($row = mysqli_fetch_array($result)) {
+?><tr><td><?php echo $row["name"]; ?></td><td><?php echo $row["phone"]; ?></td>
+<td><?php echo $row["event_title"]; ?></td>
+45
+<td> <?php echo '<a href="updateStaff.php?id='.$row['event_id'].'" class = "btn btn-default"> 
+Update</a>'?></td></tr>
+<?php
+$i++;
+}
+?></table>
+<?php
+}
+else{
+echo "No result found";
+}
+?></div></div></body>
+<?php include 'utils/footer.php';?>
+</html>
+Stu_details.php
+<?php
+include_once 'classes/db1.php';
+$result = mysqli_query($conn,"SELECT * FROM events,registered r ,participent p WHERE 
+events.event_id=r.event_id and r.usn = p.usn order by event_title");
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder--></head>
+<body><?php include 'utils/adminHeader.php'?>
+<div class = "content"><div class = "container"><h1>Student details</h1>
+<?php
+if (mysqli_num_rows($result) > 0) {
+?>
+<table class="table table-hover" >
+<tr><th>USN</th><th>Name</th><th>Branch</th><th>Sem</th><th>Email</th><th>Phone</th>
+<th>College</th><th>Event</th></tr>
+<?php
+$i=0;
+while($row = mysqli_fetch_array($result)) {
+?><tr>
+<td><?php echo $row["usn"]; ?></td>
+<td><?php echo $row["name"]; ?></td>
+<td><?php echo $row["branch"]; ?></td>
+46
+<td><?php echo $row["sem"]; ?></td>
+<td><?php echo $row["email"]; ?></td>
+<td><?php echo $row["phone"]; ?></td>
+<td><?php echo $row["college"]; ?></td>
+<td><?php echo $row["event_title"]; ?></td></tr>
+<?php
+$i++;
+}
+?></table>
+<?php
+}
+else{
+echo "No result found";
+}
+?></div></div>
+<?php include 'utils/footer.php'?>;</body></html>
+UpdatesStaff.php
+<?php include 'classes/db1.php';
+$id=$_GET['id'];
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder-->
+</head>
+<body>
+<?php require 'utils/header.php'; ?>
+<div class ="content"><!--body content holder-->
+<div class = "container">
+<div class ="col-md-6 col-md-offset-3">
+<form method="POST">
+<label>Staff co-ordinator name</label><br>
+<input type="text" name="st_name" required class="form-control"><br><br>
+<label>Staff co-ordinator phone</label><br>
+<input type="text" name="phone" required class="form-control"><br><br>
+<button type="submit" name="update" class = "btn btn-default ">Update</button></div></div></div>
+</form>
+<?php require 'utils/footer.php'; ?></body></html>
+<?php
+47
+if (isset($_POST["update"]))
+{
+$name=$_POST["st_name"];
+$phone=$_POST["phone"];
+$sql="UPDATE staff_coordinator set phone='$phone',name='$name' where stid='$id'";
+if($conn->query($sql)===true)
+{
+echo"<script>
+alert(' Updated Successfully');
+window.location.href='stu_cordinator.php';
+</script>";
+}
+else
+{
+echo"<script>
+window.location.href='updateStudent.php';
+</script>";
+}}?>
+updateStudent.php
+<?php include 'classes/db1.php';
+$id=$_GET['id'];
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder--></head>
+<body>
+<?php require 'utils/header.php'; ?>
+<div class ="content"><!--body content holder-->
+<div class = "container">
+<div class ="col-md-6 col-md-offset-3">
+<form method="POST">
+<label>Student co-ordinator name</label><br>
+<input type="text" name="st_name" required class="form-control"><br><br>
+<label>Student co-ordinator phone</label><br>
+<input type="text" name="phone" required class="form-control"><br><br>
+<button type="submit" name="update" class = "btn btn-default ">Update</button></div></div></div>
+</form>
+<?php require 'utils/footer.php'; ?>
+48
+</body></html>
+<?php
+if (isset($_POST["update"]))
+{
+$name=$_POST["st_name"];
+$phone=$_POST["phone"];
+$sql="UPDATE student_coordinator set phone='$phone',st_name='$name' where sid='$id'";
+if($conn->query($sql)===true)
+{
+echo"<script>
+alert(' Updated Successfully');
+window.location.href='stu_cordinator.php';
+</script>";
+}
+else
+{
+echo"<script>
+window.location.href='updateStudent.php';
+</script>";
+}}?>
+updateStaff.php
+<?php include 'classes/db1.php';
+$id=$_GET['id'];
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder--></head>
+<body>
+<?php require 'utils/header.php'; ?>
+<div class ="content"><!--body content holder--><div class = "container">
+<div class ="col-md-6 col-md-offset-3">
+<form method="POST">
+<label>Staff co-ordinator name</label><br>
+<input type="text" name="st_name" required class="form-control"><br><br>
+<label>Staff co-ordinator phone</label><br>
+<input type="text" name="phone" required class="form-control"><br><br>
+<button type="submit" name="update" class = "btn btn-default ">Update</button></div></div></div>
+</form>
+49
+<?php require 'utils/footer.php'; ?>
+</body>
+</html>
+<?php
+if (isset($_POST["update"]))
+{
+$name=$_POST["st_name"];
+$phone=$_POST["phone"];
+$sql="UPDATE staff_coordinator set phone='$phone',name='$name' where stid='$id'";
+if($conn->query($sql)===true)
+{
+echo"<script>
+alert(' Updated Successfully');
+window.location.href='stu_cordinator.php';
+</script>";
+}
+else
+{
+echo"<script>
+window.location.href='updateStudent.php';
+</script>";
+}}?>
+createEventForm.php
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>cems</title>
+<title></title>
+<?php require 'utils/styles.php'; ?><!--css links. file found in utils folder-->
+</head>
+<body>
+<?php require 'utils/adminHeader.php'; ?>
+<form method="POST">
+<div class="w3-container">
+<div class ="content"><!--body content holder-->
+<div class = "container">
+<div class ="col-md-6 col-md-offset-3">
+<label>Event ID:</label><br>
+<input type="number" name="event_id" required class="form-control"><br><br>
+<label>Event Name:</label><br>
+<input type="text" name="event_title" required class="form-control"><br><br>
+50
+<label>Event Price:</label><br>
+<input type="number" name="event_price" required class="form-control"><br><br>
+<label>Upload Path to Image:</label><br>
+<input type="text" name="img_link" required class="form-control"><br><br>
+<label>Type_ID </label><br>
+<input type="number" name="type_id" required class="form-control"><br><br>
+<label>Event Date</label><br>
+<input type="date" name="Date" required class="form-control"><br><br>
+<label>Event Time</label><br>
+<input type="text" name="time" required class="form-control"><br><br>
+<label>Event Location</label><br>
+<input type="text" name="location" required class="form-control"><br><br>
+<label>Staff co-ordinator name</label><br>
+<input type="text" name="sname" required class="form-control"><br><br>
+<label>Student co-ordinator name</label><br>
+<input type="text" name="st_name" required class="form-control"><br><br>
+<button type="submit" name="update" class = "btn btn-default pull-right">Create Event <span 
+class="glyphicon glyphicon-send"></span></button>
+<a class="btn btn-default navbar-btn" href = "adminPage.php"><span class="glyphicon glyphicon-circle-arrowleft"></span> Back</a>
+</div></div></div>
+</form>
+</body>
+<?php require 'utils/footer.php'; ?></html>
+<?php
+if (isset($_POST["update"]))
+{
+$event_id=$_POST["event_id"];
+$event_title=$_POST["event_title"];
+$event_price=$_POST["event_price"];
+$img_link=$_POST["img_link"];
+$type_id=$_POST["type_id"];
+$name=$_POST["sname"];
+$st_name=$_POST["st_name"];
+$Date=$_POST["Date"];
+$time=$_POST["time"];
+$location=$_POST["location"];
+if(!empty($event_id) || !empty($event_title) || !empty($event_price) || !empty($participents) || 
+!empty($img_link) || !empty($type_id) )
+{
+include 'classes/db1.php';
+$INSERT="INSERT INTO events(event_id,event_title,event_price,img_link,type_id) 
+VALUES($event_id,'$event_title', $event_price,'$img_link',$type_id);";
+51
+$INSERT.= "INSERT INTO event_info (event_id,Date,time,location) Values 
+($event_id,'$Date','$time','$location');";
+$INSERT.="INSERT into student_coordinator(sid,st_name,phone,event_id) 
+values($event_id,'$st_name',NULL,$event_id);";
+$INSERT.="INSERT into staff_coordinator(stid,name,phone,event_id) 
+values($event_id,'$name',NULL,$event_id)";
+if($conn->multi_query($INSERT)===True){
+echo "<script>
+alert('Event Inserted Successfully!');
+window.location.href='adminPage.php';
+</script>";}
+else
+{
+echo"<script>
+alert('Event already exsists!');
+window.location.href='createEventForm.php';
+</script>";}
+$conn->close();}
+else
+{
+echo"<script>
+alert('All fields are required');
+window.location.href='createEventForm1.php';</script>";
+}
+}
+?>
+deleteEvent.php
+<?php require 'classes/db1.php';
+$id=$_GET['id'];
+$sql="delete from events where event_id='$id';";
+$sql.="delete from event_info where event_id='$id';";
+$sql.="delete from staff_coordinator where event_id='$id';";
+$sql.="delete from student_coordinator where event_id='$id';";
+$sql.="delete from registered where event_id='$id'";
+if($conn->multi_query($sql) === True)
+{
+echo"<script>
+alert('Event Deleted Successfully');
+window.location.href='adminPage.php';
+</script>";
+}
+else{
+52
+echo "Error deleting record".$conn->error;
+}
+$conn->close();
+?>
