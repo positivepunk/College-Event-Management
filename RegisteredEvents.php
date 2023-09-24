@@ -28,7 +28,6 @@ echo '<td>' . $row['st_name'] . '</td>';
 echo '<td>' . $row['name'] . '</td>';
 echo '<td>'.$row['Date'].'</td>';
 echo '<td>'.$row['time'].'</td>';
-38
 echo '<td>'.$row['location'].'</td>';
 echo '</tr>';
 $i++;

@@ -31,7 +31,7 @@ color: red;
 <?php require 'utils/footer.php'; ?><!--footer content. file found in utils folder-->
 </body>
 </html>
-40
+
 <?php
 if (isset($_POST["update"]))
 {
