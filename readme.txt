@@ -1,4 +1,4 @@
 admin login
 
 name:admin
-pass:admin
+pass:cool
